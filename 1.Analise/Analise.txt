@@ -1,2 +1,82 @@
-Caso de Uso 1 - Efetuar Login
+(1)   /POST        /usuario/login
 
+request 
+{
+    "nome": "",
+    "senha": ""
+}
+reponse 
+{
+    "id":0,
+    "nome": "",
+    "nome": ""
+}
+
+************************************************************************************
+
+(2)  /POST          /veiculo
+
+request
+{
+    "modelo": "",
+    "marca": "",
+    "valor": 0.0,
+    "placa": "",
+    "ano-fabricação": '2020',
+    "km": 000.000,
+    "codigo": 0,
+    "classe": "",
+    "usuario": 0
+}
+
+response
+{
+    "modelo": "",
+    "marca": "",
+    "valor": 0.0,
+    "placa": "",
+    "ano-fabricação": '2020',
+    "km": 000.000,
+    "codigo": 0,
+    "classe": "",
+    "usuario": 0
+}
+
+************************************************************************************
+
+(2.1)  /PUT         /filme/:id/imagem
+
+request
+{
+    "imagem": "",
+}
+
+response (204)
+-- Sem conteudo
+
+
+************************************************************************************
+
+--CSU03: 
+
+
+************************************************************************************
+
+(4)   /DELETE          /veiculo/:id
+
+response(204)
+
+
+************************************************************************************
+
+(5)   /GET            /veiculo/busca?nome=xx
+
+response
+[
+    "id_cadastro_veiculo": 0,
+    "modelo": "",
+    "marca": "",
+    "valor": "2020-10-00",
+    "disponivel": true,
+    "usuario": 0
+]
