@@ -11,6 +11,16 @@ export async function inserirVeiculo(veiculo){
     return veiculo;
 }
 
+export async function inserirImagem (imagem, id){
+    const comando =
+         `UPDATE tb_funcionario
+	         SET img_veiculo       = ?
+         WHERE id_cadastro_veiculo = ?;`
+    
+    const [resposta] = await con.query(comando, [imagem, id])
+    return resposta.affectedRows;
+}
+
 export async function removerVeiculo(id) {
     const comando = 
     `delete from tb_cadastro_veiculo
