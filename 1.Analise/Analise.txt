@@ -17,17 +17,7 @@ reponse
 (2)  /POST          /veiculo
 
 request
-{
-    "modelo": "",
-    "marca": "",
-    "valor": 0.0,
-    "placa": "",
-    "ano-fabricação": '2020',
-    "km": 000.000,
-    "codigo": 0,
-    "classe": "",
-    "usuario": 0
-}
+0
 
 response
 {
