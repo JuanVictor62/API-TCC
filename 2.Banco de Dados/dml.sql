@@ -1,4 +1,4 @@
-use SistemaOptima;
+use SistemaOptimaFrei;
 
 -- Efetuar Login
 insert into tb_funcionario (ds_funcionario,ds_senha)

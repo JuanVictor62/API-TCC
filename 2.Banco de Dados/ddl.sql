@@ -1,6 +1,6 @@
-create database SistemaOptima;
+create database SistemaOptimaFrei;
 
-use SistemaOptima;
+use SistemaOptimaFrei;
 
 create table tb_funcionario(
     id_funcionario    int primary key auto_increment,
