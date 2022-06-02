@@ -29,3 +29,15 @@ export async function removerVeiculo(id) {
     const { resposta } = await con.query(comando, [id])
     return resposta.affectedRows
 }
+
+export async function listarTodosVeículos() {
+    const comando = 
+    `select 	id_cadastro_veiculo      id,
+                ds_modelo               nome,
+                ds_marca                marca,
+                vl_valor                valor    
+    from        tb_cadastro_veiculo`
+
+    const [linhas] = await con.query(comando);
+    return linhas;
+}

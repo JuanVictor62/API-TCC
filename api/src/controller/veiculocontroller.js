@@ -1,8 +1,7 @@
-import { inserirVeiculo } from '../repository/filmeRepository.js'
 import multer from 'multer'
 
 import { Router } from 'express'
-import { inserirImagem, removerVeiculo } from '../repository/veiculoreposity.js';
+import { inserirImagem, removerVeiculo, inserirVeiculo, listarTodosVeículos } from '../repository/veiculoReposity.js';
 const server = Router();
 const upload = multer({ dest: 'storage/fotos-carros' });
 
@@ -70,3 +69,17 @@ server.delete('/veiculos/:id', async (req, resp) => {
 })
 
 
+server.get('/veiculos', async (req,resp) => {
+    try {
+        const resposta = await listarTodosVeículos()
+        resp.send(resposta);
+
+
+    } catch (err) {
+        resp.status(400).send({
+            erro: err.message
+        }); 
+    }
+})
+
+export default server
