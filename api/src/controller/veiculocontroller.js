@@ -2,10 +2,11 @@ import { inserirVeiculo } from '../repository/filmeRepository.js'
 import multer from 'multer' 
 
 import { Router } from 'express'
+import { removerVeiculo } from '../repository/veiculoreposity.js';
 const server = Router();
 const upload = multer({ dest:'storage/fotos-carros'});
 
-server.post('/veiculo', async (req, resp) => {
+server.post('/veiculos', async (req, resp) => {
     try {
         const novoVeiculo = req.body;
         if(!novoVeiculo.nome)
@@ -23,6 +24,24 @@ server.post('/veiculo', async (req, resp) => {
 
         const veiculoinserido = await inserirVeiculo(novoVeiculo);
         resp.send(veiculoinserido); 
+    } catch (err) {
+        resp.status(401).send({
+            erro: err.message
+        });
+    }
+})
+
+
+
+server.delete('/veiculos/:id', async (req,resp) => {
+    try {
+        const { id } = req.params;
+
+        const resposta = await removerVeiculo(id);
+        if(resposta != 1)
+            throw new Error("Veículo não pode ser removido")
+
+        resp.status(204).send()
     } catch (err) {
         resp.status(401).send({
             erro: err.message

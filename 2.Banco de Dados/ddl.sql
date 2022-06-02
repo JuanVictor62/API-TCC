@@ -20,4 +20,3 @@ create table tb_cadastro_veiculo(
     ds_classe 		     varchar(15),
     img_veiculo          blob
 );
-
