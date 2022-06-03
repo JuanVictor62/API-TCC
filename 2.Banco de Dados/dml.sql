@@ -1,4 +1,4 @@
-use SistemaOptima;
+use SistemaOptimaFrei;
 
 -- Efetuar Login
 insert into tb_funcionario (ds_funcionario,ds_senha)
@@ -38,4 +38,7 @@ select 	id_cadastro_veiculo      id,
         bt_disponivel disponivel
 from tb_cadastro_veiculo
 	where ds_modelo    like '%a%';
-    
+
+
+
+--CSU06: Alterar dados do veículo

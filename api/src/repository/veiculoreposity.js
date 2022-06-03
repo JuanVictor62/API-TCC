@@ -41,7 +41,12 @@ export async function listarTodosVeículos() {
     `select 	id_cadastro_veiculo      id,
                 ds_modelo               nome,
                 ds_marca                marca,
-                vl_valor                valor    
+                vl_valor                valor,
+                ds_placa 	 	        placa,
+                dt_anofab               anofab,
+                vl_km      	            km,
+                nr_codigo               codigo,
+                ds_classe 		        classe
     from        tb_cadastro_veiculo`
 
     const [linhas] = await con.query(comando);
@@ -62,4 +67,24 @@ export async function buscarPorNome(nome){
 
     const [linhas] = await con.query(comando, [`%${nome}%`]);
     return linhas;
+}
+
+
+export async function alterarVeiculo(id, veiculo) {
+    
+    const comando = `
+    update tb_cadastro_veiculo 
+    set ds_modelo    =      ?,
+     ds_marca        =      ?,
+     vl_valor        =      ?,
+     ds_placa 	 	 =      ?,
+     dt_anofab       =	    ?,
+     vl_km      	 =      ?,
+     nr_codigo       =      ?,
+     ds_classe 		 =      ?
+
+    where id_cadastro_veiculo = ?`
+
+    const [resposta] = await con.query(comando, [veiculo.modelo, veiculo.marca, veiculo.valor, veiculo.placa, veiculo.anofab, veiculo.km, veiculo.codigo, veiculo.classe, veiculo.id])
+    return resposta.affectedRows;
 }

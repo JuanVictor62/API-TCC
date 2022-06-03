@@ -1,13 +1,13 @@
 import multer from 'multer'
 
 import { Router } from 'express'
-import { inserirImagem, removerVeiculo, inserirVeiculo, listarTodosVeículos } from '../repository/veiculoReposity.js';
+import { inserirImagem, removerVeiculo, inserirVeiculo, listarTodosVeículos, alterarVeiculo } from '../repository/veiculoReposity.js';
 const server = Router();
 const upload = multer({ dest: 'storage/fotos-carros' });
 
 
 //Adicionar Veiculo
-server.post('/veiculos', async (req, resp) => {
+server.post('/veiculo', async (req, resp) => {
     try {
         const novoVeiculo = req.body;
         if (!novoVeiculo.modelo)
@@ -18,7 +18,7 @@ server.post('/veiculos', async (req, resp) => {
             throw new Error('Valor do veiculo é obrigatorio!');
         if (!novoVeiculo.placa)
             throw new Error('Placa do veiculo é obrigatorio!');
-        if (!novoVeiculo.anofab)
+        if (novoVeiculo.anofab < 0 || undefined)
             throw new Error('Ano de Fabricação do veiculo é obrigatorio!');
         if (!novoVeiculo.km)
             throw new Error('Quilometragem do veiculo é obrigatorio!');
@@ -38,7 +38,7 @@ server.post('/veiculos', async (req, resp) => {
 
 
 //Inserir Imagem 
-server.put('/veiculos/:id/imagem', upload.single('capa'), async (req, resp) => {
+server.put('/veiculo/:id/imagem', upload.single('capa'), async (req, resp) => {
     try {
         const { id } = req.params;
         const imagem = req.file.path;
@@ -58,7 +58,7 @@ server.put('/veiculos/:id/imagem', upload.single('capa'), async (req, resp) => {
 
 
 //Deletar Veiculo
-server.delete('/veiculos/:id', async (req, resp) => {
+server.delete('/veiculo/:id', async (req, resp) => {
     try {
         const { id } = req.params;
 
@@ -68,7 +68,7 @@ server.delete('/veiculos/:id', async (req, resp) => {
 
         resp.status(204).send()
     } catch (err) {
-        resp.status(401).send({
+        resp.status(402).send({
             erro: err.message
         });
     }
@@ -76,7 +76,7 @@ server.delete('/veiculos/:id', async (req, resp) => {
 
 
 //Listar Veiculos
-server.get('/veiculos', async (req,resp) => {
+server.get('/veiculo', async (req,resp) => {
     try {
         const resposta = await listarTodosVeículos();
         resp.send(resposta);
@@ -106,6 +106,42 @@ server.get('/veiculo/busca', async (req,resp) => {
     }
 })
 
+
+server.put('/veiculo', async (req, resp) => {
+    try {
+        const id = req.params;
+        const veiculo = req.body;
+
+        if (!veiculo.modelo)
+            throw new Error('Modelo do veiculo é obrigatorio!');
+        if (!veiculo.marca)
+            throw new Error('Marca do veiculo é obrigatorio!');
+        if (veiculo.valor < 0 || undefined)
+            throw new Error('Valor do veiculo é obrigatorio!');
+        if (!veiculo.placa)
+            throw new Error('Placa do veiculo é obrigatorio!');
+        if (veiculo.anofab < 0 || undefined)
+            throw new Error('Ano de Fabricação do veiculo é obrigatorio!');
+        if (!veiculo.km)
+            throw new Error('Quilometragem do veiculo é obrigatorio!');
+        if (!veiculo.codigo)
+            throw new Error('Codigo do veiculo é obrigatorio!');
+        if (!veiculo.classe)
+            throw new Error('Classe do veiculo é obrigatorio!');
+
+        const resposta = await alterarVeiculo(id, veiculo);
+        if( resposta != 1)
+            throw new Error("Veículo não pode ser alterado")
+
+        else
+            resp.status(204).send();
+
+    } catch (err) {
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
 
 
 export default server
