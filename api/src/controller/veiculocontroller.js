@@ -5,6 +5,8 @@ import { inserirImagem, removerVeiculo, inserirVeiculo, listarTodosVeículos } f
 const server = Router();
 const upload = multer({ dest: 'storage/fotos-carros' });
 
+
+//Adicionar Veiculo
 server.post('/veiculos', async (req, resp) => {
     try {
         const novoVeiculo = req.body;
@@ -34,6 +36,8 @@ server.post('/veiculos', async (req, resp) => {
     }
 })
 
+
+//Inserir Imagem 
 server.put('/veiculos/:id/imagem', upload.single('capa'), async (req, resp) => {
     try {
         const { id } = req.params;
@@ -52,6 +56,8 @@ server.put('/veiculos/:id/imagem', upload.single('capa'), async (req, resp) => {
 
 })
 
+
+//Deletar Veiculo
 server.delete('/veiculos/:id', async (req, resp) => {
     try {
         const { id } = req.params;
@@ -69,11 +75,11 @@ server.delete('/veiculos/:id', async (req, resp) => {
 })
 
 
+//Listar Veiculos
 server.get('/veiculos', async (req,resp) => {
     try {
-        const resposta = await listarTodosVeículos()
+        const resposta = await listarTodosVeículos();
         resp.send(resposta);
-
 
     } catch (err) {
         resp.status(400).send({
@@ -81,5 +87,25 @@ server.get('/veiculos', async (req,resp) => {
         }); 
     }
 })
+
+
+//Buscar por nome
+server.get('/veiculo/busca', async (req,resp) => {
+    try {
+        const { nome } = req.query;
+        const resposta = await buscarPorNome(nome);
+
+        if(!resposta){
+            throw new Error('Veiculo não localizado.')
+        }
+        resp.send(resposta); 
+    } catch (err) {
+        resp.status(400).send({
+            erro: err.message
+        })
+    }
+})
+
+
 
 export default server

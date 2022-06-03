@@ -13,17 +13,12 @@ export default function listarTodosVeículos() {
     return linhas;
 }
 
-
-
 /////////////////////////////////////////////////////////
-
-
 
 server.get('/veiculos', async (req, resp) => {
     try {
         const resposta = await listarTodosVeículos()
         resp.send(resposta);
-
 
     } catch (err) {
         resp.status(400).send({
