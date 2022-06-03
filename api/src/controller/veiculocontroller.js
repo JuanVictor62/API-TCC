@@ -76,7 +76,7 @@ server.delete('/veiculo/:id', async (req, resp) => {
 
 
 //Listar Veiculos
-server.get('/veiculo', async (req,resp) => {
+server.get('/veiculo', async (req, resp) => {
     try {
         const resposta = await listarTodosVeículos();
         resp.send(resposta);
@@ -84,21 +84,21 @@ server.get('/veiculo', async (req,resp) => {
     } catch (err) {
         resp.status(400).send({
             erro: err.message
-        }); 
+        });
     }
 })
 
 
 //Buscar por nome
-server.get('/veiculo/busca', async (req,resp) => {
+server.get('/veiculo/busca', async (req, resp) => {
     try {
         const { nome } = req.query;
         const resposta = await buscarPorNome(nome);
 
-        if(!resposta){
+        if (!resposta) {
             throw new Error('Veiculo não localizado.')
         }
-        resp.send(resposta); 
+        resp.send(resposta);
     } catch (err) {
         resp.status(400).send({
             erro: err.message
@@ -130,7 +130,7 @@ server.put('/veiculo', async (req, resp) => {
             throw new Error('Classe do veiculo é obrigatorio!');
 
         const resposta = await alterarVeiculo(id, veiculo);
-        if( resposta != 1)
+        if (resposta != 1)
             throw new Error("Veículo não pode ser alterado")
 
         else

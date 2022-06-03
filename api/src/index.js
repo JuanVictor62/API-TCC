@@ -15,6 +15,6 @@ server.use('/storage/fotos-carros', express.static('storage/fotos-carros'));
 server.use(usuariocontroller);
 server.use(veiculocontroller);
 
-server.listen(process.env.PORT, () => 
+server.listen(process.env.PORT, () =>
         console.log(`API esta Online na Porta ${process.env.PORT}`));
 

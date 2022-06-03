@@ -1,6 +1,6 @@
-import { con  } from "./connection.js";
+import { con } from "./connection.js";
 
-export async function login(nome, senha){
+export async function login(nome, senha) {
     const comando = `select 	id_funcionario     id,
                                 ds_funcionario     nome,
                                 ds_senha           senha
