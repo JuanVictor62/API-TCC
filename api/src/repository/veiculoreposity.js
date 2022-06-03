@@ -15,9 +15,9 @@ export async function inserirVeiculo(veiculo){
 /*Inserir imagem*/
 export async function inserirImagem (imagem, id){
     const comando =
-         `UPDATE tb_funcionario
+         `UPDATE tb_cadastro_veiculo
 	         SET img_veiculo       = ?
-         WHERE id_cadastro_veiculo = ?`
+         WHERE id_cadastro_veiculo = ? `
     
     const [resposta] = await con.query(comando, [imagem, id])
     return resposta.affectedRows;
@@ -30,7 +30,7 @@ export async function removerVeiculo(id) {
     `delete from tb_cadastro_veiculo
 	 where       id_cadastro_veiculo = ? `
 
-    const { resposta } = await con.query(comando, [id])
+    const [ resposta ] = await con.query(comando, [id])
     return resposta.affectedRows
 }
 
@@ -60,8 +60,7 @@ export async function buscarPorNome(nome){
         `select 	id_cadastro_veiculo      id,
 		            ds_modelo                nome,
 		            ds_marca                 marca,
-		            vl_valor                 valor,
-                    bt_disponivel            disponivel
+		            vl_valor                 valor
         from tb_cadastro_veiculo
 	            where ds_modelo    like ? `
 

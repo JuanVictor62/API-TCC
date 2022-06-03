@@ -1,7 +1,7 @@
 import multer from 'multer'
 
 import { Router } from 'express'
-import { inserirImagem, removerVeiculo, inserirVeiculo, listarTodosVeículos, alterarVeiculo } from '../repository/veiculoReposity.js';
+import { inserirImagem, removerVeiculo, inserirVeiculo, listarTodosVeículos, alterarVeiculo, buscarPorNome } from '../repository/veiculoReposity.js';
 const server = Router();
 const upload = multer({ dest: 'storage/fotos-carros' });
 
@@ -38,7 +38,7 @@ server.post('/veiculo', async (req, resp) => {
 
 
 //Inserir Imagem 
-server.put('/veiculo/:id/imagem', upload.single('capa'), async (req, resp) => {
+server.put('/veiculo/:id/imagem', upload.single('imagem'), async (req, resp) => {
     try {
         const { id } = req.params;
         const imagem = req.file.path;
@@ -49,8 +49,8 @@ server.put('/veiculo/:id/imagem', upload.single('capa'), async (req, resp) => {
 
         resp.status(204).send()
     } catch (err) {
-        resp.status(404).send({
-            error: err.message
+        resp.status(401).send({
+            erro: err.message
         })
     }
 
@@ -106,7 +106,7 @@ server.get('/veiculo/busca', async (req,resp) => {
     }
 })
 
-
+// alterar veiculo
 server.put('/veiculo', async (req, resp) => {
     try {
         const id = req.params;
